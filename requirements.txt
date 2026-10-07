@@ -15,6 +15,11 @@ optuna==3.6.1
 
 # Experiment tracking & explainability
 mlflow==2.14.1
+# Pin SQLAlchemy below 2.1: mlflow 2.14.1 imports
+# sqlalchemy.pool.FallbackAsyncAdaptedQueuePool, which was removed in 2.1.
+# mlflow only constrains sqlalchemy<3, so without this pip resolves 2.1.x
+# and both the API model service and `mlflow ui` fail to start.
+sqlalchemy==2.0.54
 shap==0.45.1
 matplotlib==3.9.0
 
