@@ -1,0 +1,18 @@
+{
+  "year": 2024,
+  "month": 1,
+  "cleaning": {
+    "input_rows": 2964624,
+    "output_rows": 2727349,
+    "total_dropped": 237275,
+    "dropped": {
+      "outside_target_period": 18,
+      "trip_duration_out_of_range": 36999,
+      "trip_distance_out_of_range": 58,
+      "fare_out_of_range": 32321,
+      "passenger_count_out_of_range": 167879
+    }
+  },
+  "demand_feature_rows": 145728,
+  "fare_feature_rows": 2727349
+}
