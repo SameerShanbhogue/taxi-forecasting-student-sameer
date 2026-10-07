@@ -32,6 +32,7 @@ after cloning: serving requires both registered models and saved demand history.
 ## Documentation
 
 - [Request and launch the Windows course image](docs/STUDENT_AWS_IMAGE_ACCESS.md)
+- [AWS deploy with CodeBuild (Linux)](docs/AWS_SETUP_LINUX.md)
 - [Local setup and commands](docs/SETUP.md)
 - [API request examples](docs/API_EXAMPLES.md)
 - [System architecture](docs/ARCHITECTURE.md)
