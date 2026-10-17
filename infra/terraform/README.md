@@ -20,7 +20,7 @@ apply them. They contain no credentials or connection to an existing deployment.
 
 From the repository root, with Terraform installed:
 
-```powershell
+```bash
 terraform -chdir=infra/terraform fmt -check -recursive
 terraform -chdir=infra/terraform init -backend=false -input=false
 terraform -chdir=infra/terraform validate

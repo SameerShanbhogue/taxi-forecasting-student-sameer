@@ -24,8 +24,17 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m pytest
 ```
 
+Or on Linux/macOS (bash):
+
+```bash
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pytest
+```
+
 Tests use synthetic data and do not require downloads, models or AWS access.
-Follow [setup](docs/SETUP.md) to download data, train registered models, and
+Follow [setup](docs/SETUP.md) (or the [Linux setup port](docs/SETUP_LINUX.md)) to
+download data, train registered models, and
 start the API and dashboard. Do not expect working predictions immediately
 after cloning: serving requires both registered models and saved demand history.
 
@@ -35,6 +44,7 @@ after cloning: serving requires both registered models and saved demand history.
 - [AWS deploy with CodeBuild (Linux)](docs/AWS_SETUP_LINUX.md)
 - [Local setup and commands](docs/SETUP.md)
 - [API request examples](docs/API_EXAMPLES.md)
+- [Linux/bash command ports](docs/SETUP_LINUX.md) of the setup guide, API examples, and every L2-L12 lab (`docs/*_LINUX.md`)
 - [System architecture](docs/ARCHITECTURE.md)
 - [Data scope and model limitations](docs/DATA_STATEMENT.md)
 - [Optional AWS infrastructure](infra/terraform/README.md)
