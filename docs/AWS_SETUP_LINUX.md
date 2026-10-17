@@ -34,7 +34,7 @@ reserve time for teardown.
 | Virtualenv | `.\.venv\Scripts\python.exe` | `.venv/bin/python` |
 | Env vars | `$env:VAR = "x"` | `export VAR=x` |
 | Temp dir | `$env:TEMP` | `/tmp` |
-| Artifact upload | `scripts/aws/upload_artifacts.ps1` | inline `aws s3` commands (below) |
+| Artifact upload | `scripts/aws/upload_artifacts.ps1` | `scripts/aws/upload_artifacts.sh` (inline `aws s3` shown below) |
 | Build wait loop | PowerShell `do/while` | bash `while` + `aws ... --query` |
 | Health check | `Invoke-RestMethod` | `curl -s ... \| python3 -m json.tool` |
 | Open docs | `Start-Process` | `xdg-open` |
@@ -55,12 +55,22 @@ These mirror the PowerShell scripts and take `--region` (default
 | `scripts/aws/build_push_dashboard.sh` | `build_push_dashboard.ps1` | Build and push the Streamlit dashboard image |
 | `scripts/aws/upload_dashboard_artifacts.sh` | `upload_dashboard_artifacts.ps1` | Seed `dashboard/` static artifacts in the bucket |
 | `scripts/aws/deploy.sh` | `deploy.ps1` | Local one-command deploy (requires Docker) |
-| `scripts/aws/destroy.sh` | `destroy.ps1` | `terraform destroy` |
+| `scripts/aws/destroy.sh` | `destroy.ps1` | `terraform destroy` (accepts the same `--var-file` as `deploy.sh`) |
+| `scripts/aws/publish_fairness_evidence.sh` | `publish_fairness_evidence.ps1` | Publish L11 fairness evidence (latest + immutable versioned prefix) and retain the verification manifest |
+| `scripts/aws/prepare_dashboard_staging.sh` | `prepare_dashboard_staging.ps1` | Verify the staging API and emit dashboard env vars; optionally sync S3 evidence and retain the L12 sources manifest |
 
 Each supports `--help`. The CodeBuild route (Parts H–K) does not need Docker
 locally; `deploy.sh`/`build_push.sh` are for the alternative local-Docker route.
-The showcase helpers `prepare_dashboard_staging.ps1` and
-`publish_fairness_evidence.ps1` remain PowerShell-only.
+Every `scripts/aws/*.ps1` helper now has a bash companion.
+
+One difference to note: `prepare_dashboard_staging.ps1` sets env vars in its own
+PowerShell process, but a bash child cannot modify the caller's shell. The bash
+port therefore prints `export` lines to stdout (progress goes to stderr) — apply
+them to the current shell with:
+
+```bash
+eval "$(scripts/aws/prepare_dashboard_staging.sh --download-s3-artifacts)"
+```
 
 ## Why the First Deployment Has Two Terraform Applies
 
